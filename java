@@ -159,3 +159,133 @@ public class abs {
         System.out.println("Cone Surface Area: " + cone.wholesurfacearea());
     }
 }
+_____________________________________________________________________________________________________________________________________
+  Package
+package mathops;
+
+public class Operations {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public double divide(int a, int b) {
+        if (b == 0) {
+            System.out.println("Division by zero not allowed.");
+            return Double.NaN;
+        }
+        return (double) a / b;
+    }
+}
+import mathops.Operations;
+import java.util.Scanner;
+
+public class MainClass {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Operations op = new Operations();
+
+        System.out.print("Enter first number: ");
+        int a = sc.nextInt();
+
+        System.out.print("Enter second number: ");
+        int b = sc.nextInt();
+
+        System.out.println("Addition: " + op.add(a, b));
+        System.out.println("Subtraction: " + op.subtract(a, b));
+        System.out.println("Multiplication: " + op.multiply(a, b));
+        System.out.println("Division: " + op.divide(a, b));
+    }
+}
+_________________________________________________________________________________________________________________________________
+  Exeption handling
+public class Factorial {
+
+    private static final int MAX = 20; // Max value for which factorial fits in long
+    private static long[] cache = new long[MAX + 1]; // To store precomputed factorials
+
+    // Static block to precompute factorials
+    static {
+        cache[0] = 1;
+        for (int i = 1; i <= MAX; i++) {
+            cache[i] = cache[i - 1] * i;
+        }
+    }
+
+    // Method to return factorial
+    public static long getFactorial(int x) {
+        if (x < 0) {
+            throw new IllegalArgumentException("value of x must be positive");
+        }
+        if (x > MAX) {
+            throw new IllegalArgumentException("result will overflow.");
+        }
+        return cache[x];
+    }
+}
+public class MainClass {
+    public static void main(String[] args) {
+        try {
+            int value = 10;  // You can change this for testing
+            long result = Factorial.getFactorial(value);
+            System.out.println(value + "! = " + result);
+
+            value = 21;  // Should trigger overflow
+            result = Factorial.getFactorial(value);
+            System.out.println(value + "! = " + result);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+___________________________________________________________________________________________________________________________
+PING PONG
+import java.util.Random;
+
+class PingThread extends Thread {
+    public void run() {
+        Random rand = new Random();
+        while (true) {
+            try {
+                int delay = rand.nextInt(1000) + 1000; // Random delay between 1000ms and 2000ms
+                Thread.sleep(delay);
+                System.out.println("Ping");
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+}
+
+class PongThread extends Thread {
+    public void run() {
+        Random rand = new Random();
+        while (true) {
+            try {
+                int delay = rand.nextInt(1000) + 1000; // Random delay between 1000ms and 2000ms
+                Thread.sleep(delay);
+                System.out.println("PONG");
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+}
+
+public class PingPongGame {
+    public static void main(String[] args) {
+        PingThread pingThread = new PingThread();
+        PongThread pongThread = new PongThread();
+        
+        pingThread.start();
+        pongThread.start();
+    }
+}
