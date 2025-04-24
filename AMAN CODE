@@ -1,0 +1,43 @@
+import java.util.Random;
+
+class PingThread extends Thread {
+    public void run() {
+        Random rand = new Random();
+        while (true) {
+            int spaces = rand.nextInt(30); // random distance (0 to 29 spaces)
+            System.out.println(" ".repeat(spaces) + "Ping");
+            try {
+                Thread.sleep(1000); // 1 second delay
+            } catch (InterruptedException e) {
+                System.out.println("Ping thread interrupted.");
+            }
+        }
+    }
+}
+
+class PongThread extends Thread {
+    public void run() {
+        Random rand = new Random();
+        while (true) {
+            int spaces = rand.nextInt(30); // random distance (0 to 29 spaces)
+            System.out.println(" ".repeat(spaces) + "PONG");
+            try {
+                Thread.sleep(1000); // 1 second delay
+            } catch (InterruptedException e) {
+                System.out.println("PONG thread interrupted.");
+            }
+        }
+    }
+}
+
+public class PingPong {
+    public static void main(String[] args) {
+        PingThread ping = new PingThread();
+        PongThread pong = new PongThread();
+
+        ping.start();
+        pong.start();
+    }
+}
+--------------+---------------------
+
